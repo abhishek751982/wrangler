@@ -64,6 +64,8 @@ directive
     | stringList
     | numberRanges
     | properties
+    | byteSizeArg
+    | timeDurationArg
   )*?
   ;
 
@@ -141,6 +143,15 @@ numberRange
 
 value
  : String | Number | Column | Bool
+ : String | Number | Column | Bool | BYTE_SIZE | TIME_DURATION
+ ;
+ 
+ byteSizeArg
+ : BYTE_SIZE
+ ;
+ 
+ timeDurationArg
+ : TIME_DURATION
  ;
 
 ecommand
@@ -255,6 +266,22 @@ Bool
 
 Number
  : Int ('.' Digit*)?
+ ;
+
+BYTE_SIZE
+ : Number BYTE_UNIT
+ ;
+ 
+TIME_DURATION
+ : Number TIME_UNIT
+ ;
+ 
+fragment BYTE_UNIT
+ : [KkMmGgTt]? [Bb]
+ ;
+ 
+fragment TIME_UNIT
+ : 'ns' | 'us' | 'ms' | 's' | 'm' | 'h'
  ;
 
 Identifier
